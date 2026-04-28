@@ -1,0 +1,93 @@
+---
+title: "Reproducibility workflow: snapshot, manifest, SHA-256, Zenodo"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Reproducibility workflow: snapshot, manifest, SHA-256, Zenodo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
+```
+
+Published tax research (PBO costings, Grattan reform papers, Tax
+Institute briefs) has a reproducibility bar that goes beyond "I
+called `ato_individuals()` and summed column X." Reviewers need to
+verify that the data you used is exactly the data you say you used.
+`ato` provides four features to meet that bar:
+
+1. **Snapshot pin** : declare the intended vintage of the data.
+2. **SHA-256 integrity** : every cached file is hashed; drift warns.
+3. **Session manifest** : every fetch is recorded with URL, SHA,
+   retrieval time, and snapshot pin.
+4. **Zenodo DOI** : mint a DOI for the manifest so a paper can cite
+   the exact data snapshot.
+
+## Setup
+
+```{r}
+library(ato)
+
+ato_snapshot("2026-04-24")
+ato_manifest_clear()
+```
+
+## Fetch your datasets
+
+```{r}
+ind <- ato_individuals_postcode(
+  year = c("2020-21", "2021-22", "2022-23"),
+  state = "NSW"
+)
+
+companies <- ato_companies(year = "2022-23", table = "industry")
+tax_gap   <- ato_tax_gaps()
+```
+
+Each `ato_tbl` prints with the snapshot pin and SHA-256 digest in
+its provenance header.
+
+## Inspect the session manifest
+
+```{r}
+man <- ato_manifest()
+man[, c("title", "sha256", "retrieved", "snapshot_date")]
+```
+
+## Export the manifest for your paper appendix
+
+```{r}
+ato_manifest_write("appendix/ato_manifest.csv")
+ato_manifest_write("appendix/ato_manifest.yaml")
+```
+
+## Mint a DOI via Zenodo
+
+A DOI makes "retrieved from data.gov.au on 2026-04-24" citable and
+immutable. Your paper then cites `doi:10.5281/zenodo.XXXXXXXX`
+instead of a URL that might rotate.
+
+```{r}
+dep <- ato_deposit_zenodo(
+  title = "ATO data snapshot for working paper v1",
+  creators = list(list(name = "Author, A.", orcid = "0000-0000-0000-0000")),
+  upload = FALSE  # dry run; inspect payload first
+)
+dep$payload$metadata$title
+
+# When ready to actually deposit:
+# Sys.setenv(ZENODO_TOKEN = "...your token...")
+# dep <- ato_deposit_zenodo(upload = TRUE)
+# dep$doi_prereserve
+```
+
+## Citing a dataset with full provenance
+
+```{r}
+ato_cite(ind, style = "bibtex", doi = "10.5281/zenodo.XXXXXXXX")
+```
+
+The BibTeX `note` field includes the snapshot date and first 12
+hex characters of the SHA-256. That is the verifiable audit trail
+a reviewer would ask for.

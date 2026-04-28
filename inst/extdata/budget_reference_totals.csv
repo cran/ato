@@ -1,0 +1,19 @@
+financial_year,measure,value_aud_billion,source,definition,note
+2020-21,individuals_income_tax_net,249.5,"Final Budget Outcome 2020-21 Table 4.2","Gross income tax on individuals less refunds (cash basis, Commonwealth receipts)",
+2021-22,individuals_income_tax_net,282.4,"Final Budget Outcome 2021-22 Table 4.2","Gross income tax on individuals less refunds (cash basis, Commonwealth receipts)",
+2022-23,individuals_income_tax_net,316.4,"Final Budget Outcome 2022-23 Table 4.2","Gross income tax on individuals less refunds (cash basis, Commonwealth receipts)",
+2023-24,individuals_income_tax_net,335.3,"Final Budget Outcome 2023-24 Table 4.2","Gross income tax on individuals less refunds (cash basis, Commonwealth receipts)",
+2020-21,company_tax_net,91.2,"Final Budget Outcome 2020-21 Table 4.2","Company tax net of refunds (cash basis)",
+2021-22,company_tax_net,115.2,"Final Budget Outcome 2021-22 Table 4.2","Company tax net of refunds (cash basis)",
+2022-23,company_tax_net,140.3,"Final Budget Outcome 2022-23 Table 4.2","Company tax net of refunds (cash basis)",
+2023-24,company_tax_net,129.2,"Final Budget Outcome 2023-24 Table 4.2","Company tax net of refunds (cash basis)",
+2020-21,gst_net,66.1,"Final Budget Outcome 2020-21 Table 4.2","GST collections net of refunds and input tax credits (cash basis)",
+2021-22,gst_net,79.3,"Final Budget Outcome 2021-22 Table 4.2","GST collections net of refunds and input tax credits (cash basis)",
+2022-23,gst_net,83.4,"Final Budget Outcome 2022-23 Table 4.2","GST collections net of refunds and input tax credits (cash basis)",
+2023-24,gst_net,86.3,"Final Budget Outcome 2023-24 Table 4.2","GST collections net of refunds and input tax credits (cash basis)",
+2020-21,superannuation_guarantee_contribution,101.2,"APRA Annual Superannuation Bulletin","Employer SG contributions received by APRA-regulated funds and SMSFs (accrual basis)",indicative
+2021-22,superannuation_guarantee_contribution,121.6,"APRA Annual Superannuation Bulletin","Employer SG contributions received by APRA-regulated funds and SMSFs (accrual basis)",indicative
+2022-23,superannuation_guarantee_contribution,138.0,"APRA Annual Superannuation Bulletin","Employer SG contributions received by APRA-regulated funds and SMSFs (accrual basis)",indicative
+2020-21,fuel_excise_net,16.5,"Final Budget Outcome 2020-21 Table 4.2","Petroleum excise net of fuel tax credits (cash basis)",
+2021-22,fuel_excise_net,13.1,"Final Budget Outcome 2021-22 Table 4.2","Petroleum excise net of fuel tax credits (cash basis)",
+2022-23,fuel_excise_net,18.6,"Final Budget Outcome 2022-23 Table 4.2","Petroleum excise net of fuel tax credits (cash basis)",

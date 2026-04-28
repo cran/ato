@@ -1,0 +1,68 @@
+bibentry(
+  bibtype = "Manual",
+  title   = "ato: Download and Tidy Australian Taxation Office Data",
+  author  = person("Charles", "Coverdale"),
+  year    = format(Sys.Date(), "%Y"),
+  note    = sprintf("R package version %s", meta$Version),
+  url     = "https://cran.r-project.org/package=ato",
+  textVersion = sprintf(
+    "Coverdale, C. (%s). ato: Download and Tidy Australian Taxation Office Data. R package version %s. https://cran.r-project.org/package=ato",
+    format(Sys.Date(), "%Y"),
+    meta$Version
+  )
+)
+
+# When published work using ato draws on a specific ATO dataset,
+# also cite the dataset itself (ato_cite() on any ato_tbl produces
+# a BibTeX or APA record with snapshot date and SHA-256 digest).
+bibentry(
+  bibtype  = "Article",
+  title    = "The Distribution of Top Incomes in Australia",
+  author   = c(person("Anthony B.", "Atkinson"),
+               person("Andrew", "Leigh")),
+  journal  = "Economic Record",
+  year     = "2007",
+  volume   = "83",
+  number   = "262",
+  pages    = "247--261",
+  doi      = "10.1111/j.1475-4932.2007.00412.x",
+  textVersion = paste(
+    "Atkinson, A.B. and Leigh, A. (2007).",
+    "\"The Distribution of Top Incomes in Australia.\"",
+    "Economic Record, 83(262), 247-261.",
+    "doi:10.1111/j.1475-4932.2007.00412.x"
+  ),
+  header = "Top-incomes literature:"
+)
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "taxstats: 2 per cent Individual Sample File from the Australian Taxation Office",
+  author   = person("Hugh", "Parsonage"),
+  year     = "2019",
+  note     = "R package (DRAT)",
+  url      = "https://github.com/HughParsonage/taxstats",
+  textVersion = paste(
+    "Parsonage, H. (2019). taxstats: 2 per cent Individual",
+    "Sample File from the Australian Taxation Office.",
+    "R package (DRAT).",
+    "https://github.com/HughParsonage/taxstats"
+  ),
+  header = "Microdata sister package:"
+)
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "grattan: Perform Common Quantitative Tasks for Australian Analysts",
+  author   = person("Hugh", "Parsonage"),
+  year     = format(Sys.Date(), "%Y"),
+  note     = "R package",
+  url      = "https://cran.r-project.org/package=grattan",
+  textVersion = paste0(
+    "Parsonage, H. (", format(Sys.Date(), "%Y"),
+    "). grattan: Perform Common Quantitative Tasks for ",
+    "Australian Analysts. R package. ",
+    "https://cran.r-project.org/package=grattan"
+  ),
+  header = "Policy-calculator sister package:"
+)

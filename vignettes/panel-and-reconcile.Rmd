@@ -1,0 +1,96 @@
+---
+title: "Panels, harmonisation, reconciliation, real terms, per-capita"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Panels, harmonisation, reconciliation, real terms, per-capita}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
+```
+
+This vignette walks through the four panel-ready transformations
+that take raw ATO fetches to a defensible longitudinal analysis:
+
+1. Stack multiple years with `year =` vector input.
+2. Harmonise column names across releases with `ato_harmonise()`.
+3. Reconcile totals against Final Budget Outcome with
+   `ato_reconcile()`.
+4. Express in real terms and per capita with `ato_deflate()` and
+   `ato_per_capita()`.
+
+## Build a multi-year panel
+
+```{r}
+library(ato)
+
+pc <- ato_individuals_postcode(
+  year = c("2018-19", "2019-20", "2020-21",
+           "2021-22", "2022-23"),
+  state = "NSW"
+)
+
+nrow(pc)
+unique(pc$year)
+```
+
+## Harmonise column names
+
+Column names drift: `total_income` in some years, `total_income_or_loss`
+in others; `state` vs `state_territory`. `ato_harmonise()` renames
+columns to canonical names from `ATO_COL_VARIANTS`.
+
+```{r}
+pc <- ato_harmonise(pc)
+names(pc)
+```
+
+## Reconcile against Commonwealth totals
+
+Before reporting a panel sum in a paper, check it against the Final
+Budget Outcome. A 1-3 per cent accrual-vs-cash gap is expected;
+larger gaps warrant investigation.
+
+```{r}
+ind_2223 <- ato_individuals(year = "2022-23")
+total_tax <- sum(ind_2223$tax_payable, na.rm = TRUE)
+
+ato_reconcile(
+  value   = total_tax,
+  year    = "2022-23",
+  measure = "individuals_income_tax_net"
+)
+```
+
+## Real-terms comparison
+
+ATO values are nominal AUD of the reporting year. For time-series
+comparison, deflate to a common base year using the bundled ABS
+CPI series.
+
+```{r}
+panel_annual <- aggregate(taxable_income ~ year, data = pc, FUN = sum,
+                          na.rm = TRUE)
+panel_annual$real_2022_23 <- ato_deflate(
+  panel_annual$taxable_income,
+  year = panel_annual$year,
+  base = "2022-23"
+)
+panel_annual
+```
+
+## Per-capita normalisation
+
+```{r}
+panel_annual$per_capita <- ato_per_capita(
+  panel_annual$real_2022_23,
+  year = panel_annual$year
+)
+panel_annual
+```
+
+The resulting four-column data frame (year, nominal, real, per
+capita) is the canonical shape for distributional and time-series
+tax papers.

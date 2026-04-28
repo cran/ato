@@ -1,0 +1,20 @@
+anzsic_2006_code,anzsic_2006_name,anzsic_2020_code,anzsic_2020_name,relationship
+A,Agriculture Forestry and Fishing,A,Agriculture Forestry and Fishing,one-to-one
+B,Mining,B,Mining,one-to-one
+C,Manufacturing,C,Manufacturing,one-to-one
+D,"Electricity Gas Water and Waste Services",D,"Electricity Gas Water and Waste Services",one-to-one
+E,Construction,E,Construction,one-to-one
+F,Wholesale Trade,F,Wholesale Trade,one-to-one
+G,Retail Trade,G,Retail Trade,one-to-one
+H,"Accommodation and Food Services",H,"Accommodation and Food Services",one-to-one
+I,"Transport Postal and Warehousing",I,"Transport Postal and Warehousing",one-to-one
+J,"Information Media and Telecommunications",J,"Information Media and Telecommunications",one-to-one
+K,"Financial and Insurance Services",K,"Financial and Insurance Services",one-to-one
+L,"Rental Hiring and Real Estate Services",L,"Rental Hiring and Real Estate Services",one-to-one
+M,"Professional Scientific and Technical Services",M,"Professional Scientific and Technical Services",one-to-one
+N,"Administrative and Support Services",N,"Administrative and Support Services",one-to-one
+O,"Public Administration and Safety",O,"Public Administration and Safety",one-to-one
+P,"Education and Training",P,"Education and Training",one-to-one
+Q,"Health Care and Social Assistance",Q,"Health Care and Social Assistance",one-to-one
+R,"Arts and Recreation Services",R,"Arts and Recreation Services",one-to-one
+S,Other Services,S,Other Services,one-to-one

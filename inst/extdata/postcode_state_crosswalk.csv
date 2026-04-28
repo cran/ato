@@ -1,0 +1,9 @@
+postcode,state,sa4_name,region_type
+2000,NSW,Sydney - City and Inner South,metro
+2600,ACT,Australian Capital Territory,metro
+3000,VIC,Melbourne - Inner,metro
+4000,QLD,Brisbane Inner City,metro
+5000,SA,Adelaide - Central and Hills,metro
+6000,WA,Perth - Inner,metro
+7000,TAS,Hobart,metro
+0800,NT,Darwin,metro

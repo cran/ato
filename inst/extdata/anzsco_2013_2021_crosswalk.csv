@@ -1,0 +1,9 @@
+anzsco_2013_major,anzsco_2013_name,anzsco_2021_major,anzsco_2021_name,relationship
+1,Managers,1,Managers,one-to-one
+2,Professionals,2,Professionals,one-to-one
+3,Technicians and Trades Workers,3,Technicians and Trades Workers,one-to-one
+4,Community and Personal Service Workers,4,Community and Personal Service Workers,one-to-one
+5,Clerical and Administrative Workers,5,Clerical and Administrative Workers,one-to-one
+6,Sales Workers,6,Sales Workers,one-to-one
+7,Machinery Operators and Drivers,7,Machinery Operators and Drivers,one-to-one
+8,Labourers,8,Labourers,one-to-one
