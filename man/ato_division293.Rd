@@ -11,10 +11,10 @@ Individuals. Licensed CC BY 2.5 AU.
 ato_division293(year = "latest")
 }
 \arguments{
-\item{year}{\code{"YYYY-YY"} or \code{"latest"}.}
+\item{year}{\code{"YYYY-YY"} or \code{"latest"}. Ignored.}
 }
 \value{
-An \code{ato_tbl}.
+Never returns; always aborts.
 }
 \description{
 Returns Division 293 tax data: number of assessments, average
@@ -25,15 +25,19 @@ contributions above AUD 250,000. Central to retirement-income
 reform analysis (e.g. Grattan's "Better Super" proposals).
 }
 \details{
-Published as part of the Individuals Taxation Statistics
-(Table 3b in recent releases).
+\strong{Defunct.} Division 293 assessments are not published as a
+labelled series in Taxation Statistics. There is no "Table 3b",
+and no Division 293 column appears in the Individuals or
+SuperFunds detailed tables of the current release. Version
+0.1.0 fell back to Individuals Table 3 (sex by taxable status
+by age range by taxable income range) and labelled the result
+"ATO Division 293", which was wrong.
+
+It now aborts rather than mislabelling an unrelated table, and
+will be removed in a future release.
 }
 \examples{
-\donttest{
-op <- options(ato.cache_dir = tempdir())
-try(ato_division293(year = "2022-23"))
-options(op)
-}
+try(ato_division293())
 }
 \references{
 Commonwealth of Australia. \emph{Income Tax Assessment Act

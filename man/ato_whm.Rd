@@ -2,7 +2,7 @@
 % Please edit documentation in R/whm.R
 \name{ato_whm}
 \alias{ato_whm}
-\title{Working Holiday Maker tax data}
+\title{Working Holiday Maker tax data (not available)}
 \source{
 Australian Taxation Office Taxation Statistics.
 Licensed CC BY 2.5 AU.
@@ -11,22 +11,27 @@ Licensed CC BY 2.5 AU.
 ato_whm(year = "latest")
 }
 \arguments{
-\item{year}{\code{"YYYY-YY"} or \code{"latest"}.}
+\item{year}{\code{"YYYY-YY"} or \code{"latest"}. Ignored.}
 }
 \value{
-An \code{ato_tbl}.
+Never returns; always aborts.
 }
 \description{
-Returns aggregate Working Holiday Maker tax data: number of
-backpackers, total earnings, tax paid. Relevant for migration
-and labour-market policy analysis.
+\strong{Defunct.} The ATO does not publish Working
+Holiday Maker aggregates as open data. No resource matching
+working holiday makers, WHM or backpackers exists in any ATO
+package on data.gov.au, in the current Taxation Statistics
+release or in the archived ones. This function was shipped in
+0.1.0 on the assumption that such a table existed; it never
+returned WHM data.
+}
+\details{
+It now aborts with a pointer to the published source rather
+than resolving to an unrelated table. It will be removed in a
+future release.
 }
 \examples{
-\donttest{
-op <- options(ato.cache_dir = tempdir())
-try(ato_whm(year = "2022-23"))
-options(op)
-}
+try(ato_whm())
 }
 \references{
 Commonwealth of Australia. \emph{Migration Act 1958}, visa

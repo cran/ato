@@ -57,12 +57,16 @@ ato_super_funds <- function(year = "latest",
   }
 
   id <- ato_ts_package_id(year)
-  pattern <- if (type == "apra") {
-    # Real resource filenames are ts<YY>fund0[1-4]... (e.g. ts23fund01aprasbyyear.xlsx);
-    # the display name is "SuperFunds - Table N".
-    "fund0[1-4]|superfunds"
-  } else {
-    "super"
+  # Recent filenames are ts<YY>fund0[1-4]... (ts23fund01aprasbyyear.xlsx)
+  # and the display name is "SuperFunds - Table N". Releases up to
+  # 2012-13 used a single digit and no zero pad
+  # (taxstats2012fund1apraselecteditemsbyyear.xls), which the padded
+  # pattern alone missed.
+  pattern <- c("fund0[1-4]", "fund[1-4]apra", "superfunds", "fund[1-4]")
+  if (type != "apra") {
+    # "super" alone matches individual16superfundcontributions in the
+    # early releases, so keep it as a last resort.
+    pattern <- c(pattern, "super")
   }
   res <- ato_ckan_resolve(id, pattern)
   url <- res$url %||% ""

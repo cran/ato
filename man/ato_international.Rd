@@ -4,8 +4,10 @@
 \alias{ato_international}
 \title{OECD Revenue Statistics comparison}
 \source{
-OECD Revenue Statistics
-\url{https://www.oecd.org/tax/tax-policy/revenue-statistics.htm}.
+OECD Revenue Statistics 2025
+\url{https://www.oecd.org/en/publications/revenue-statistics-2025_3a264267-en.html}.
+The former \code{oecd.org/tax/tax-policy/revenue-statistics.htm}
+landing page now returns HTTP 410.
 }
 \usage{
 ato_international(country = "AUS", year = "latest")
@@ -29,6 +31,12 @@ tax-to-GDP, international ranks for personal income tax).
 \details{
 Thin wrapper pointing users to \verb{readoecd::} for full OECD API
 access; returns a minimal tax-to-GDP slice here for convenience.
+
+\strong{Data vintage.} The bundled headline ratios are hardcoded and
+currently run to 2023 (Australia reports to the OECD a year
+behind most members). They are not refreshed automatically. For
+anything load-bearing use \verb{readoecd::} against the live OECD
+Data Explorer rather than this convenience slice.
 }
 \examples{
 \donttest{

@@ -14,17 +14,26 @@ ato_medicare_levy(year = "latest", component = c("levy", "surcharge"))
 \item{year}{\code{"YYYY-YY"} or \code{"latest"}.}
 
 \item{component}{One of \code{"levy"} (default, standard Medicare
-Levy) or \code{"surcharge"} (MLS).}
+Levy) or \code{"surcharge"} (MLS). Both return Table 3.}
 }
 \value{
 An \code{ato_tbl}.
 }
 \description{
-Returns aggregate Medicare Levy and MLS data from Taxation
-Statistics Individuals. The 2\% Medicare Levy is on most
-taxable income; MLS is an additional 1.0 to 1.5\% on high-income
-earners without adequate private hospital cover. Used in
-private health insurance reform analysis.
+Returns Individuals Table 3 (sex by taxable status by age range
+by taxable income range), which carries the "Medicare levy",
+"Medicare levy surcharge" and "Total Medicare levy liability"
+column pairs. The 2\% Medicare Levy is on most taxable income;
+MLS is an additional 1.0 to 1.5\% on high-income earners without
+adequate private hospital cover. Used in private health
+insurance reform analysis.
+}
+\details{
+The ATO does not publish separate levy and surcharge workbooks,
+so both \code{component} values return the same table; the argument
+selects which columns are reported back to you. Version 0.1.0
+resolved \code{component = "levy"} to Individuals Table 1, which has
+no Medicare columns at all.
 }
 \examples{
 \donttest{

@@ -10,12 +10,20 @@
 #' contributions above AUD 250,000. Central to retirement-income
 #' reform analysis (e.g. Grattan's "Better Super" proposals).
 #'
-#' Published as part of the Individuals Taxation Statistics
-#' (Table 3b in recent releases).
+#' **Defunct.** Division 293 assessments are not published as a
+#' labelled series in Taxation Statistics. There is no "Table 3b",
+#' and no Division 293 column appears in the Individuals or
+#' SuperFunds detailed tables of the current release. Version
+#' 0.1.0 fell back to Individuals Table 3 (sex by taxable status
+#' by age range by taxable income range) and labelled the result
+#' "ATO Division 293", which was wrong.
 #'
-#' @param year `"YYYY-YY"` or `"latest"`.
+#' It now aborts rather than mislabelling an unrelated table, and
+#' will be removed in a future release.
 #'
-#' @return An `ato_tbl`.
+#' @param year `"YYYY-YY"` or `"latest"`. Ignored.
+#'
+#' @return Never returns; always aborts.
 #'
 #' @source Australian Taxation Office Taxation Statistics
 #'   Individuals. Licensed CC BY 2.5 AU.
@@ -32,26 +40,13 @@
 #' @family specialist
 #' @export
 #' @examples
-#' \donttest{
-#' op <- options(ato.cache_dir = tempdir())
-#' try(ato_division293(year = "2022-23"))
-#' options(op)
-#' }
+#' try(ato_division293())
 ato_division293 <- function(year = "latest") {
-  id <- ato_ts_package_id(year)
-  res <- tryCatch(
-    ato_ckan_resolve(id, "division.?293|div.?293"),
-    error = function(e) NULL
-  )
-  if (is.null(res)) {
-    # Fallback: Table 3b "high-income super" pattern.
-    res <- ato_ckan_resolve(id, "individual(s)?03|individual_03")
-  }
-  url <- res$url %||% ""
-  df <- ato_fetch_xlsx(url, sheet = 1)
-  rownames(df) <- NULL
-  new_ato_tbl(df,
-              source = url,
-              licence = "CC BY 2.5 AU",
-              title = paste0("ATO Division 293 ", year))
+  cli::cli_abort(c(
+    "Division 293 assessments are not published in Taxation Statistics.",
+    "i" = "No Division 293 column exists in the Individuals or SuperFunds tables.",
+    "i" = "Concessional contributions detail: {.code ato_individuals(year)} \\
+           Tables 20 to 24 via {.code ato_download()}.",
+    "i" = "See {.url https://www.ato.gov.au/about-ato/research-and-statistics/}"
+  ))
 }

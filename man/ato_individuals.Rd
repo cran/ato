@@ -12,9 +12,10 @@ Licensed CC BY 2.5 AU.
 ato_individuals(year = "latest")
 }
 \arguments{
-\item{year}{Year in \code{"YYYY-YY"} form (e.g. \code{"2022-23"}) or
-\code{"latest"}. \code{"latest"} resolves to the most recently
-published release (currently 2022-23).}
+\item{year}{Year in \code{"YYYY-YY"} form (e.g. \code{"2023-24"}) or
+\code{"latest"}. \code{"latest"} is resolved against the live CKAN
+catalogue at call time, so it tracks new ATO releases without
+a package update. As at August 2026 it resolves to 2023-24.}
 }
 \value{
 An \code{ato_tbl} with one row per aggregate line-item and

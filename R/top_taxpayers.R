@@ -99,16 +99,39 @@ ato_top_taxpayers <- function(year = "latest",
     )
   }
 
-  type_col <- ato_find_col(df, "entity")
-  if (entity_type != "all" && !is.na(type_col)) {
-    # CTT column values: "Australian public", "Australian private",
-    # "Foreign-owned". Match the substantive token only.
-    etype_pattern <- switch(entity_type,
-      public  = "public",
-      private = "private",
-      foreign = "foreign"
-    )
-    df <- df[grepl(etype_pattern, tolower(df[[type_col]])), , drop = FALSE]
+  # Each CTT workbook carries late amendments for prior income
+  # years alongside the headline year: the 2023-24 release holds
+  # 4,110 rows for 2023-24 plus 88 amendment rows for 2022-23 and
+  # 2021-22. Honour the requested year rather than returning the
+  # mixture.
+  if ("income_year" %in% names(df)) {
+    keep <- as.character(df$income_year) == year
+    if (any(keep) && !all(keep)) {
+      cli::cli_inform(c(
+        "i" = "Dropped {sum(!keep)} prior-year amendment row{?s} from the \\
+               {year} workbook."
+      ))
+      df <- df[keep, , drop = FALSE]
+    }
+  }
+
+  if (entity_type != "all") {
+    type_col <- ato_find_col(df, "entity")
+    if (is.na(type_col)) {
+      cli::cli_warn(c(
+        "Cannot filter by entity type: no entity-type column in this release.",
+        "i" = "Returning all rows unfiltered."
+      ))
+    } else {
+      # CTT column values: "Australian public", "Australian private",
+      # "Foreign-owned". Match the substantive token only.
+      etype_pattern <- switch(entity_type,
+        public  = "public",
+        private = "private",
+        foreign = "foreign"
+      )
+      df <- df[grepl(etype_pattern, tolower(df[[type_col]])), , drop = FALSE]
+    }
   }
 
   ato_warn_suppression(df, context = "CTT entity cells")

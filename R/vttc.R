@@ -56,22 +56,41 @@ ato_vttc <- function(year = "latest") {
 
   ato_check_staleness(pkg_id)
 
+  pkg  <- ato_ckan_package(pkg_id)
+  urls <- vapply(pkg$resources %||% list(),
+                 function(r) r$url %||% "", character(1))
+  tagged <- regmatches(urls, regexpr("20[0-9]{2}-[0-9]{2}", urls))
+
   if (identical(year, "latest")) {
-    pkg  <- ato_ckan_package(pkg_id)
-    urls <- vapply(pkg$resources %||% list(),
-                   function(r) r$url %||% "", character(1))
-    years <- regmatches(urls, regexpr("20[0-9]{2}-[0-9]{2}", urls))
-    year  <- if (length(years) > 0L) max(years) else "2022-23"
+    year <- if (length(tagged) > 0L) max(tagged) else NA_character_
   } else {
     year <- ato_resolve_year(year)
   }
 
-  res <- ato_ckan_resolve(pkg_id, year)
+  # The ATO retired the per-year VTTC workbooks and now publishes a
+  # single dated notifications register (e.g.
+  # 20260731_ttc_notifications.xlsx) covering every signatory and
+  # year. Try a year-tagged resource first, then that register.
+  patterns <- c(if (!is.na(year)) year, "ttc.notification|transparency")
+  res <- ato_ckan_resolve(pkg_id, patterns)
   url <- res$url %||% ""
+  matched_year <- !is.na(year) && grepl(year, url, fixed = TRUE)
+
+  if (!matched_year) {
+    cli::cli_inform(c(
+      "i" = "VTTC is published as a single all-years register, not per-year files.",
+      "i" = "Returning the full register; filter it yourself if you need one year."
+    ))
+  }
+
   df  <- ato_fetch_xlsx(url, sheet = 1)
   rownames(df) <- NULL
   new_ato_tbl(df,
               source  = url,
               licence = "CC BY 3.0 AU",
-              title   = paste0("ATO VTTC disclosures ", year))
+              title   = if (matched_year) {
+                paste0("ATO VTTC disclosures ", year)
+              } else {
+                "ATO VTTC disclosures (all years)"
+              })
 }

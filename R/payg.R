@@ -27,32 +27,13 @@
 #' options(op)
 #' }
 ato_payg <- function(year = "latest") {
-  result   <- ato_ckan_search(q = "pay-as-you-go", rows = 10L)
-  pkgs     <- result$results
-  ids      <- vapply(pkgs, function(p) p$name %||% "", character(1))
-  payg_ids <- ids[grepl("pay.as.you.go|payg.withholding", ids,
-                          ignore.case = TRUE)]
-
-  if (length(payg_ids) == 0L) {
-    cli::cli_abort(c(
-      "Could not find a PAYG withholding package on data.gov.au.",
-      "i" = "Browse: {.url https://data.gov.au/data/organization/australiantaxationoffice}"
-    ))
-  }
-  pkg_id <- payg_ids[1L]
+  # PAYG withholding is a table family inside Taxation Statistics
+  # (PAYG Tables 1 and 2), not a standalone package.
+  pkg_id <- ato_ts_package_id(year)
   ato_check_staleness(pkg_id)
 
-  if (identical(year, "latest")) {
-    pkg  <- ato_ckan_package(pkg_id)
-    urls <- vapply(pkg$resources %||% list(),
-                   function(r) r$url %||% "", character(1))
-    years <- regmatches(urls, regexpr("20[0-9]{2}-[0-9]{2}", urls))
-    year  <- if (length(years) > 0L) max(years) else "2022-23"
-  } else {
-    year <- ato_resolve_year(year)
-  }
-
-  res <- ato_ckan_resolve(pkg_id, year)
+  res <- ato_ckan_resolve(pkg_id, c("payg01", "payg_01", "payg"),
+                          exclude = "snapshot")
   url <- res$url %||% ""
   df  <- ato_fetch_xlsx(url, sheet = 1)
   rownames(df) <- NULL

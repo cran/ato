@@ -39,12 +39,18 @@ ato_individuals_age <- function(year = "latest",
                            title_prefix = "ATO individuals by age"))
   }
   id <- ato_ts_package_id(year)
-  res <- ato_ckan_resolve(id, "age|individual(s)?02|individual_02")
+  res <- ato_ckan_resolve(id, c("individual02", "individual_02", "age"),
+                          exclude = "snapshot")
   url <- res$url %||% ""
   df <- ato_fetch_xlsx(url, sheet = 1)
-  sex_col <- ato_find_col(df, "sex")
-  if (sex != "all" && !is.na(sex_col)) {
-    df <- df[tolower(df[[sex_col]]) == sex, , drop = FALSE]
+  if (sex != "all") {
+    sex_col <- ato_find_col(df, "sex")
+    if (is.na(sex_col)) {
+      cli::cli_warn(c("Cannot filter by sex: no sex column found.",
+                      "i" = "Returning all rows unfiltered."))
+    } else {
+      df <- df[tolower(df[[sex_col]]) == sex, , drop = FALSE]
+    }
   }
   rownames(df) <- NULL
   new_ato_tbl(df,
@@ -87,7 +93,10 @@ ato_individuals_sex <- function(year = "latest") {
                            title_prefix = "ATO individuals by sex"))
   }
   id <- ato_ts_package_id(year)
-  res <- ato_ckan_resolve(id, "by.sex|sex|individual(s)?03|individual_03")
+  # A bare "sex" pattern matches "...lodgmentmethodsex..." (Table 2),
+  # so anchor on the table number and never fall back to it.
+  res <- ato_ckan_resolve(id, c("individual03", "individual_03"),
+                          exclude = "snapshot")
   url <- res$url %||% ""
   df <- ato_fetch_xlsx(url, sheet = 1)
   rownames(df) <- NULL
@@ -131,7 +140,10 @@ ato_individuals_state <- function(year = "latest") {
                            title_prefix = "ATO individuals by state"))
   }
   id <- ato_ts_package_id(year)
-  res <- ato_ckan_resolve(id, "state|territory|individual(s)?04|individual_04")
+  # "state" and "territory" appear in the filenames of Snapshot 7 and
+  # Individuals Tables 2, 5, 6 and 8, all of which precede Table 4.
+  res <- ato_ckan_resolve(id, c("individual04", "individual_04"),
+                          exclude = "snapshot")
   url <- res$url %||% ""
   df <- ato_fetch_xlsx(url, sheet = 1)
   rownames(df) <- NULL

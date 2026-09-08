@@ -34,9 +34,10 @@ ato_ts_package_id <- function(year) {
 #' `inflateR::inflate()` or the ABS CPI series if you need
 #' real-term comparisons.
 #'
-#' @param year Year in `"YYYY-YY"` form (e.g. `"2022-23"`) or
-#'   `"latest"`. `"latest"` resolves to the most recently
-#'   published release (currently 2022-23).
+#' @param year Year in `"YYYY-YY"` form (e.g. `"2023-24"`) or
+#'   `"latest"`. `"latest"` is resolved against the live CKAN
+#'   catalogue at call time, so it tracks new ATO releases without
+#'   a package update. As at August 2026 it resolves to 2023-24.
 #'
 #' @return An `ato_tbl` with one row per aggregate line-item and
 #'   columns for count and amount in nominal AUD.
@@ -58,7 +59,8 @@ ato_ts_package_id <- function(year) {
 #' }
 ato_individuals <- function(year = "latest") {
   id <- ato_ts_package_id(year)
-  res <- ato_ckan_resolve(id, "individual(s)?01|individual_01|snapshot")
+  res <- ato_ckan_resolve(id, c("individual01", "individual_01"),
+                          exclude = "snapshot")
   url <- res$url %||% ""
   df <- ato_fetch_xlsx(url, sheet = 1)
   rownames(df) <- NULL
@@ -162,29 +164,30 @@ ato_individuals_postcode <- function(year = "latest", state = NULL,
   }
 
   id <- ato_ts_package_id(year)
-  res <- ato_ckan_resolve(id, "postcode")
+  res <- ato_ckan_resolve(id, c("individual06", "individual_06", "postcode"),
+                          exclude = "snapshot")
   url <- res$url %||% ""
-  cached <- ato_download_cached(url)
-  sheets <- tryCatch(readxl::excel_sheets(cached),
-                     error = function(e) character(0))
-  target_sheet <- if (length(sheets) > 0L &&
-                      tolower(sheets[1]) %in% c("notes", "cover",
-                                                 "information",
-                                                 "contents")) {
-    2L
-  } else {
-    1L
-  }
-  df <- ato_fetch_xlsx(url, sheet = target_sheet)
+  # Front-matter sheets are skipped centrally by ato_fetch_xlsx().
+  df <- ato_fetch_xlsx(url, sheet = 1)
 
-  state_col <- ato_find_col(df, "state")
-  if (!is.null(state) && !is.na(state_col)) {
-    df <- df[toupper(df[[state_col]]) %in% toupper(state), , drop = FALSE]
+  if (!is.null(state)) {
+    state_col <- ato_find_col(df, "state")
+    if (is.na(state_col)) {
+      cli::cli_warn(c("Cannot filter by state: no state column found.",
+                      "i" = "Returning all rows unfiltered."))
+    } else {
+      df <- df[toupper(df[[state_col]]) %in% toupper(state), , drop = FALSE]
+    }
   }
-  pc_col <- ato_find_col(df, "postcode")
-  if (!is.null(postcode) && !is.na(pc_col)) {
-    df <- df[as.character(df[[pc_col]]) %in% as.character(postcode), ,
-             drop = FALSE]
+  if (!is.null(postcode)) {
+    pc_col <- ato_find_col(df, "postcode")
+    if (is.na(pc_col)) {
+      cli::cli_warn(c("Cannot filter by postcode: no postcode column found.",
+                      "i" = "Returning all rows unfiltered."))
+    } else {
+      df <- df[as.character(df[[pc_col]]) %in% as.character(postcode), ,
+               drop = FALSE]
+    }
   }
   rownames(df) <- NULL
 
@@ -262,19 +265,29 @@ ato_individuals_occupation <- function(year = "latest", occupation = NULL,
   resolved_year <- sub("taxation-statistics-", "", id)
   ato_warn_classification_break(resolved_year, "anzsco")
 
-  res <- ato_ckan_resolve(id, "occupation|individual(s)?14|individual_14")
+  res <- ato_ckan_resolve(id, c("individual14", "individual_14", "occupation"),
+                          exclude = "snapshot")
   url <- res$url %||% ""
   df  <- ato_fetch_xlsx(url, sheet = 1)
 
-  occ_col <- ato_find_col(df, "occupation")
-  if (!is.null(occupation) && !is.na(occ_col)) {
-    pattern <- paste(tolower(occupation), collapse = "|")
-    df <- df[grepl(pattern, tolower(df[[occ_col]])), , drop = FALSE]
+  if (!is.null(occupation)) {
+    occ_col <- ato_find_col(df, "occupation")
+    if (is.na(occ_col)) {
+      cli::cli_warn(c("Cannot filter by occupation: no occupation column found.",
+                      "i" = "Returning all rows unfiltered."))
+    } else {
+      pattern <- paste(tolower(occupation), collapse = "|")
+      df <- df[grepl(pattern, tolower(df[[occ_col]])), , drop = FALSE]
+    }
   }
-  sex_col <- ato_find_col(df, "sex")
-  if (sex != "all" && !is.na(sex_col)) {
-    keep <- tolower(df[[sex_col]]) == sex
-    df   <- df[keep, , drop = FALSE]
+  if (sex != "all") {
+    sex_col <- ato_find_col(df, "sex")
+    if (is.na(sex_col)) {
+      cli::cli_warn(c("Cannot filter by sex: no sex column found.",
+                      "i" = "Returning all rows unfiltered."))
+    } else {
+      df <- df[tolower(df[[sex_col]]) == sex, , drop = FALSE]
+    }
   }
 
   if (!is.null(occupation) && nrow(df) == 0L) {

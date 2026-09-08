@@ -33,32 +33,13 @@
 #' options(op)
 #' }
 ato_charities <- function(year = "latest") {
-  result    <- ato_ckan_search(q = "charity tax", rows = 10L)
-  pkgs      <- result$results
-  ids       <- vapply(pkgs, function(p) p$name %||% "", character(1))
-  char_ids  <- ids[grepl("charit|deductible.gift|dgr|not.for.profit",
-                           ids, ignore.case = TRUE)]
-
-  if (length(char_ids) == 0L) {
-    cli::cli_abort(c(
-      "Could not find a charity / DGR package on data.gov.au.",
-      "i" = "Browse: {.url https://data.gov.au/data/organization/australiantaxationoffice}"
-    ))
-  }
-  pkg_id <- char_ids[1L]
+  # Charities are a table family inside Taxation Statistics
+  # (Charities Tables 1 to 4), not a standalone package.
+  pkg_id <- ato_ts_package_id(year)
   ato_check_staleness(pkg_id)
 
-  if (identical(year, "latest")) {
-    pkg  <- ato_ckan_package(pkg_id)
-    urls <- vapply(pkg$resources %||% list(),
-                   function(r) r$url %||% "", character(1))
-    years <- regmatches(urls, regexpr("20[0-9]{2}-[0-9]{2}", urls))
-    year  <- if (length(years) > 0L) max(years) else "2021-22"
-  } else {
-    year <- ato_resolve_year(year)
-  }
-
-  res <- ato_ckan_resolve(pkg_id, year)
+  res <- ato_ckan_resolve(pkg_id, c("charities01", "charities_01", "charit"),
+                          exclude = "snapshot")
   url <- res$url %||% ""
   df  <- ato_fetch_xlsx(url, sheet = 1)
   rownames(df) <- NULL

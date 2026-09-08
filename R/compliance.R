@@ -30,7 +30,7 @@ ato_compliance <- function(year = "latest",
                             metric = c("overview", "debt", "audit")) {
   metric <- match.arg(metric)
   results <- tryCatch(
-    ato_ckan_search(q = "compliance+OR+annual-report", rows = 50L),
+    ato_ckan_search(q = "compliance OR annual-report", rows = 50L),
     error = function(e) list(results = list())
   )
   pattern <- switch(metric,
@@ -51,7 +51,10 @@ ato_compliance <- function(year = "latest",
   if (is.null(hit)) {
     cli::cli_abort(c(
       "No compliance dataset found for metric {.val {metric}}.",
-      "i" = "Try {.code ato_catalog()} to browse available datasets."
+      "i" = "The ATO annual report is published as PDF on ato.gov.au, \\
+             not as open data on data.gov.au.",
+      "i" = "Closest published series: {.code ato_tax_gaps()}.",
+      "i" = "Browse the full catalogue with {.code ato_catalog()}."
     ))
   }
   res <- hit$resources[[1L]]

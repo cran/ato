@@ -39,12 +39,14 @@
 #' @export
 #' @examples
 #' \donttest{
-#' ato_snapshot("2026-04-24")
-#' ato_deposit_zenodo(
+#' try({
+#'   ato_snapshot("2026-04-24")
+#'   ato_deposit_zenodo(
 #'   title = "ATO data snapshot for working paper v1",
 #'   creators = list(list(name = "Coverdale, Charles")),
 #'   upload = FALSE
-#' )
+#'   )
+#' })
 #' }
 ato_deposit_zenodo <- function(title = NULL,
                                 description = NULL,

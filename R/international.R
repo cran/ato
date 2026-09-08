@@ -11,14 +11,22 @@
 #' Thin wrapper pointing users to `readoecd::` for full OECD API
 #' access; returns a minimal tax-to-GDP slice here for convenience.
 #'
+#' **Data vintage.** The bundled headline ratios are hardcoded and
+#' currently run to 2023 (Australia reports to the OECD a year
+#' behind most members). They are not refreshed automatically. For
+#' anything load-bearing use `readoecd::` against the live OECD
+#' Data Explorer rather than this convenience slice.
+#'
 #' @param country Country ISO code or name (default `"AUS"`).
 #' @param year Four-digit year or `"latest"`.
 #'
 #' @return An `ato_tbl` with columns `country`, `year`, `tax`,
 #'   `pct_gdp`.
 #'
-#' @source OECD Revenue Statistics
-#'   <https://www.oecd.org/tax/tax-policy/revenue-statistics.htm>.
+#' @source OECD Revenue Statistics 2025
+#'   <https://www.oecd.org/en/publications/revenue-statistics-2025_3a264267-en.html>.
+#'   The former `oecd.org/tax/tax-policy/revenue-statistics.htm`
+#'   landing page now returns HTTP 410.
 #'
 #' @family specialist
 #' @export
@@ -49,7 +57,8 @@ ato_international <- function(country = "AUS", year = "latest") {
     cli::cli_warn("No OECD data bundled for {.val {country}} {.val {year}}.")
   }
   new_ato_tbl(out,
-              source = "https://www.oecd.org/tax/tax-policy/revenue-statistics.htm",
+              source = paste0("https://www.oecd.org/en/publications/",
+                              "revenue-statistics-2025_3a264267-en.html"),
               licence = "OECD terms",
               title = paste0("OECD tax-to-GDP ", country, " ", year))
 }

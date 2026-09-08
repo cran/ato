@@ -6,7 +6,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
 # 
 # pc <- ato_individuals_postcode(
 #   year = c("2018-19", "2019-20", "2020-21",
-#            "2021-22", "2022-23"),
+#            "2021-22", "2022-23", "2023-24"),
 #   state = "NSW"
 # )
 # 

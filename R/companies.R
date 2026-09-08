@@ -114,13 +114,23 @@ ato_companies <- function(year = "latest",
   url <- res$url %||% ""
   df  <- ato_fetch_xlsx(url, sheet = 1)
 
-  ind_col <- ato_find_col(df, "industry")
-  if (!is.null(industry) && !is.na(ind_col)) {
-    ind_pattern <- paste(tolower(industry), collapse = "|")
-    df <- df[grepl(ind_pattern, tolower(df[[ind_col]])), , drop = FALSE]
-  }
-  if (!is.null(industry) && nrow(df) == 0L) {
-    cli::cli_warn("No industry rows matched {.val {industry}}.")
+  # Only look for the column when a filter was actually requested:
+  # Company Tables 1, 2, 3, 7 and 8 have no industry column, and
+  # warning about it on an unfiltered call is pure noise.
+  if (!is.null(industry)) {
+    ind_col <- ato_find_col(df, "industry")
+    if (is.na(ind_col)) {
+      cli::cli_warn(c(
+        "Cannot filter by industry: no industry column in {.val {table}}.",
+        "i" = "Returning all rows unfiltered."
+      ))
+    } else {
+      ind_pattern <- paste(tolower(industry), collapse = "|")
+      df <- df[grepl(ind_pattern, tolower(df[[ind_col]])), , drop = FALSE]
+      if (nrow(df) == 0L) {
+        cli::cli_warn("No industry rows matched {.val {industry}}.")
+      }
+    }
   }
 
   rownames(df) <- NULL

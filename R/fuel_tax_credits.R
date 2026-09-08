@@ -7,12 +7,22 @@
 #' implicit fossil-fuel subsidy and is a key lens for
 #' decarbonisation policy cost-benefit analysis.
 #'
-#' The ATO publishes FTC data as part of the Excise Data release
-#' and in standalone FTC tables.
+#' FTC data lives in two different places and this function routes
+#' between them. Claim totals by industry are an Excise table
+#' inside the annual Taxation Statistics release
+#' (`tsNNexcise04ftcbyindustryyear.xlsx`). Entitlement rates are in
+#' the separate, more frequently updated Excise Data package
+#' (`historical-ftc-rates-*.xlsx`, rates by fuel type back to
+#' 2006). Earlier versions looked for both in Excise Data, where
+#' the industry table has never been published.
 #'
-#' @param year `"YYYY-YY"` or `"latest"`.
-#' @param by One of `"industry"` (default, by ANZSIC division),
-#'   `"fuel"` (by fuel type), or `"period"` (quarterly rates).
+#' @param year `"YYYY-YY"` or `"latest"`. Applies to `by =
+#'   "industry"` only; the rates file is a single all-years
+#'   workbook.
+#' @param by One of `"industry"` (default, claim totals by ANZSIC
+#'   division, from Taxation Statistics), `"fuel"` or `"period"`
+#'   (both return the historical entitlement-rate schedule by fuel
+#'   type, from Excise Data).
 #'
 #' @return An `ato_tbl`.
 #'
@@ -42,13 +52,15 @@
 ato_fuel_tax_credits <- function(year = "latest",
                                   by = c("industry", "fuel", "period")) {
   by <- match.arg(by)
-  pkg <- ato_ckan_package(ATO_PACKAGE_IDS$excise)
-  pattern <- switch(by,
-    industry = "fuel.*(credit|ftc).*industry|ftc.*industry",
-    fuel     = "fuel.*(credit|ftc).*fuel|ftc.*fuel",
-    period   = "fuel.*(credit|ftc).*(rate|period)|ftc.*rate"
-  )
-  res <- ato_ckan_resolve(ATO_PACKAGE_IDS$excise, pattern)
+  if (by == "industry") {
+    pkg_id  <- ato_ts_package_id(year)
+    pattern <- c("excise04", "ftc.*industry", "fuel.*(credit|ftc).*industry")
+  } else {
+    pkg_id  <- ATO_PACKAGE_IDS$excise
+    pattern <- c("historical.ftc.rates", "ftc.*rate",
+                 "fuel.*(credit|ftc).*(rate|period)")
+  }
+  res <- ato_ckan_resolve(pkg_id, pattern)
   url <- res$url %||% ""
   df <- if (grepl("\\.csv$", url, ignore.case = TRUE)) {
     ato_fetch_csv(url)

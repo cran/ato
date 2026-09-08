@@ -1,14 +1,22 @@
 # Working Holiday Maker (WHM) tax aggregates
 
-#' Working Holiday Maker tax data
+#' Working Holiday Maker tax data (not available)
 #'
-#' Returns aggregate Working Holiday Maker tax data: number of
-#' backpackers, total earnings, tax paid. Relevant for migration
-#' and labour-market policy analysis.
+#' **Defunct.** The ATO does not publish Working
+#' Holiday Maker aggregates as open data. No resource matching
+#' working holiday makers, WHM or backpackers exists in any ATO
+#' package on data.gov.au, in the current Taxation Statistics
+#' release or in the archived ones. This function was shipped in
+#' 0.1.0 on the assumption that such a table existed; it never
+#' returned WHM data.
 #'
-#' @param year `"YYYY-YY"` or `"latest"`.
+#' It now aborts with a pointer to the published source rather
+#' than resolving to an unrelated table. It will be removed in a
+#' future release.
 #'
-#' @return An `ato_tbl`.
+#' @param year `"YYYY-YY"` or `"latest"`. Ignored.
+#'
+#' @return Never returns; always aborts.
 #'
 #' @source Australian Taxation Office Taxation Statistics.
 #'   Licensed CC BY 2.5 AU.
@@ -25,23 +33,12 @@
 #' @family specialist
 #' @export
 #' @examples
-#' \donttest{
-#' op <- options(ato.cache_dir = tempdir())
-#' try(ato_whm(year = "2022-23"))
-#' options(op)
-#' }
+#' try(ato_whm())
 ato_whm <- function(year = "latest") {
-  id <- ato_ts_package_id(year)
-  res <- ato_ckan_resolve(id, "working.holiday.maker|whm|backpacker")
-  url <- res$url %||% ""
-  df <- if (grepl("\\.csv$", url, ignore.case = TRUE)) {
-    ato_fetch_csv(url)
-  } else {
-    ato_fetch_xlsx(url, sheet = 1)
-  }
-  rownames(df) <- NULL
-  new_ato_tbl(df,
-              source = url,
-              licence = "CC BY 2.5 AU",
-              title = paste0("ATO Working Holiday Maker ", year))
+  cli::cli_abort(c(
+    "Working Holiday Maker aggregates are not published as open data.",
+    "i" = "No ATO package on data.gov.au contains a WHM resource.",
+    "i" = "See {.url https://www.ato.gov.au/about-ato/research-and-statistics/}",
+    "i" = "Use {.code ato_individuals(year)} for all-individuals aggregates."
+  ))
 }

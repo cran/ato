@@ -11,10 +11,13 @@ data. Licensed CC BY 3.0 AU.
 ato_fuel_tax_credits(year = "latest", by = c("industry", "fuel", "period"))
 }
 \arguments{
-\item{year}{\code{"YYYY-YY"} or \code{"latest"}.}
+\item{year}{\code{"YYYY-YY"} or \code{"latest"}. Applies to \code{by = "industry"} only; the rates file is a single all-years
+workbook.}
 
-\item{by}{One of \code{"industry"} (default, by ANZSIC division),
-\code{"fuel"} (by fuel type), or \code{"period"} (quarterly rates).}
+\item{by}{One of \code{"industry"} (default, claim totals by ANZSIC
+division, from Taxation Statistics), \code{"fuel"} or \code{"period"}
+(both return the historical entitlement-rate schedule by fuel
+type, from Excise Data).}
 }
 \value{
 An \code{ato_tbl}.
@@ -26,8 +29,14 @@ implicit fossil-fuel subsidy and is a key lens for
 decarbonisation policy cost-benefit analysis.
 }
 \details{
-The ATO publishes FTC data as part of the Excise Data release
-and in standalone FTC tables.
+FTC data lives in two different places and this function routes
+between them. Claim totals by industry are an Excise table
+inside the annual Taxation Statistics release
+(\code{tsNNexcise04ftcbyindustryyear.xlsx}). Entitlement rates are in
+the separate, more frequently updated Excise Data package
+(\verb{historical-ftc-rates-*.xlsx}, rates by fuel type back to
+2006). Earlier versions looked for both in Excise Data, where
+the industry table has never been published.
 }
 \examples{
 \donttest{

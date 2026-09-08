@@ -42,32 +42,15 @@
 #' options(op)
 #' }
 ato_fbt <- function(year = "latest") {
-  # Discover the FBT package by searching the catalogue.
-  result  <- ato_ckan_search(q = "fringe-benefits-tax", rows = 10L)
-  pkgs    <- result$results
-  ids     <- vapply(pkgs, function(p) p$name %||% "", character(1))
-  fbt_ids <- ids[grepl("fringe.benefits", ids, ignore.case = TRUE)]
-
-  if (length(fbt_ids) == 0L) {
-    cli::cli_abort(c(
-      "Could not find a Fringe Benefits Tax package on data.gov.au.",
-      "i" = "Browse: {.url https://data.gov.au/data/organization/australiantaxationoffice}"
-    ))
-  }
-  pkg_id <- fbt_ids[1L]
+  # FBT is a table family inside the annual Taxation Statistics
+  # release (FBT Tables 1 to 3), not a standalone package. Version
+  # 0.1.0 searched for a "fringe-benefits-tax" package that has
+  # never existed on data.gov.au.
+  pkg_id <- ato_ts_package_id(year)
   ato_check_staleness(pkg_id)
 
-  if (identical(year, "latest")) {
-    pkg  <- ato_ckan_package(pkg_id)
-    urls <- vapply(pkg$resources %||% list(),
-                   function(r) r$url %||% "", character(1))
-    years <- regmatches(urls, regexpr("20[0-9]{2}-[0-9]{2}", urls))
-    year  <- if (length(years) > 0L) max(years) else "2022-23"
-  } else {
-    year <- ato_resolve_year(year)
-  }
-
-  res <- ato_ckan_resolve(pkg_id, year)
+  res <- ato_ckan_resolve(pkg_id, c("fbt01", "fbt_01", "fbt"),
+                          exclude = "snapshot")
   url <- res$url %||% ""
   df  <- ato_fetch_xlsx(url, sheet = 1)
   rownames(df) <- NULL
