@@ -1,5 +1,5 @@
 test_that("ato_reconcile returns a 1-row diff frame", {
-  res <- ato_reconcile(value = 316.4e9,
+  res <- ato_reconcile(value = 296.658e9,
                        year = "2022-23",
                        measure = "individuals_income_tax_net")
   expect_s3_class(res, "data.frame")
@@ -28,10 +28,10 @@ test_that("ato_reconcile errors on unknown measure", {
 })
 
 test_that("ato_reconcile sums a data frame column", {
-  df <- data.frame(tax = c(100e9, 216.4e9))
+  df <- data.frame(tax = c(100e9, 196.658e9))
   res <- ato_reconcile(df, year = "2022-23",
                        measure = "individuals_income_tax_net")
-  expect_equal(res$value_aud, 316.4e9)
+  expect_equal(res$value_aud, 296.658e9)
 })
 
 # Level 3 invariant: pct_diff sign matches (value - reference).
@@ -44,4 +44,15 @@ test_that("ato_reconcile pct_diff sign is consistent with diff", {
   expect_gt(high$pct_diff, 0)
   expect_lt(low$diff_aud, 0)
   expect_lt(low$pct_diff, 0)
+})
+
+test_that("budget reference totals are read from the Final Budget Outcome", {
+  bud <- ato_crosswalk("budget")
+  get <- function(fy, m) bud$value_aud_billion[bud$financial_year == fy & bud$measure == m]
+  # FBO 2023-24 Table 1.3, Outcome column
+  expect_equal(get("2023-24", "company_tax_net"), 141.177)
+  expect_equal(get("2023-24", "individuals_income_tax_net"), 331.513)
+  expect_equal(get("2023-24", "gst_net"), 85.031)
+  expect_true(all(grepl("^Final Budget Outcome", bud$source)))
+  expect_false(anyDuplicated(bud[, c("financial_year", "measure")]) > 0)
 })

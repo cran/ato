@@ -60,11 +60,11 @@ options(op)
 }
 }
 \seealso{
-Other individuals: 
-\code{\link{ato_individuals}()},
-\code{\link{ato_individuals_age}()},
-\code{\link{ato_individuals_postcode}()},
-\code{\link{ato_individuals_sex}()},
-\code{\link{ato_individuals_state}()}
+Other individuals:
+\code{\link[=ato_individuals]{ato_individuals()}},
+\code{\link[=ato_individuals_age]{ato_individuals_age()}},
+\code{\link[=ato_individuals_postcode]{ato_individuals_postcode()}},
+\code{\link[=ato_individuals_sex]{ato_individuals_sex()}},
+\code{\link[=ato_individuals_state]{ato_individuals_state()}}
 }
 \concept{individuals}

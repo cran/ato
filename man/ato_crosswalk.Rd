@@ -57,12 +57,12 @@ Edition}, cat. 1220.0. Used by ATO Taxation Statistics from
 2022-23 onward.
 }
 \seealso{
-Other harmonisation: 
-\code{\link{ato_deflate}()},
-\code{\link{ato_harmonise}()},
-\code{\link{ato_per_capita}()},
-\code{\link{ato_reconcile}()},
-\code{\link{ato_schema_map}()},
-\code{\link{ato_to_taxstats}()}
+Other harmonisation:
+\code{\link[=ato_deflate]{ato_deflate()}},
+\code{\link[=ato_harmonise]{ato_harmonise()}},
+\code{\link[=ato_per_capita]{ato_per_capita()}},
+\code{\link[=ato_reconcile]{ato_reconcile()}},
+\code{\link[=ato_schema_map]{ato_schema_map()}},
+\code{\link[=ato_to_taxstats]{ato_to_taxstats()}}
 }
 \concept{harmonisation}

@@ -1,3 +1,56 @@
+# ato 0.1.2
+
+Data-correctness release. The three reference tables bundled for
+deflating, per-capita conversion and reconciliation did not match the
+sources they cited. Each is now built by a script in `data-raw/` from
+the published source, and covers more years.
+
+* **CPI** (`ato_deflate()`): the bundled financial-year CPI was not the
+  ABS series. 2011-12, the stated base, read 99.2 rather than 100, and
+  2022-23 read 132.9 against the ABS's 131.4, so real-terms conversions
+  were off by up to about 1.5 per cent (more before 2000). It is now the
+  mean of the four quarterly All groups CPI index numbers (weighted
+  average of eight capital cities) from the ABS Data API, referenced to
+  2011-12 = 100, and runs to 2025-26 (previously 2023-24).
+
+* **Population** (`ato_per_capita()`): estimated resident population is
+  now the ABS's current series, which includes the revisions after the
+  2021 Census; several years moved by 30,000 to 70,000 people. It runs
+  to June 2025 (previously June 2024).
+
+* **Budget reference totals** (`ato_reconcile()`): the bundled values did
+  not match the Final Budget Outcome tables they cited (company tax
+  2023-24: 129.2 against the FBO's 141.2 billion; individuals 2022-23:
+  316.4 against 296.7 billion). They are now read from each FBO's cash
+  receipts table, 2019-20 to 2025-26, with the edition and table number
+  in the `source` column. Measures: `individuals_income_tax_net`,
+  `company_tax_net`, `gst_net`, `fringe_benefits_tax`,
+  `superannuation_fund_taxes`, `fuel_excise_and_customs`,
+  `excise_and_customs_duty` and `taxation_receipts`.
+  `fuel_excise_net` (net of fuel tax credits) is replaced by
+  `fuel_excise_and_customs`: the FBO reports fuel excise gross, and fuel
+  tax credits are payments, not receipts. The
+  `superannuation_guarantee_contribution` row, an unsourced indicative
+  figure, is removed.
+
+## Wide tables are usable without cleanup
+
+The year-by-year tables (for example `ato_gst()` and `ato_individuals()`)
+came back with problems carried over from the spreadsheets:
+
+* Footnote markers stuck to year headers, so "2000-01" with note 2 became
+  the column `2000_012`. They are now stripped.
+* The label and unit columns had empty names, which tibbles and dplyr
+  reject. They are now `x1`, `x2` and so on, by position.
+* Year columns were text, because the ATO's lowercase `"na"` (not
+  available) was not among the suppression tokens converted to `NA`. It
+  now is, and year columns whose entries are all numbers are numeric.
+  Identifier columns such as postcodes are left as text, keeping their
+  leading zeros.
+
+**Results change** for `ato_deflate()`, `ato_per_capita()` and
+`ato_reconcile()`; the old values were wrong.
+
 # ato 0.1.1
 
 Bug-fix release. Version 0.1.0 could not reach the current ATO

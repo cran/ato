@@ -33,12 +33,12 @@ df <- data.frame(postcode = "2000",
 ato_harmonise(df)
 }
 \seealso{
-Other harmonisation: 
-\code{\link{ato_crosswalk}()},
-\code{\link{ato_deflate}()},
-\code{\link{ato_per_capita}()},
-\code{\link{ato_reconcile}()},
-\code{\link{ato_schema_map}()},
-\code{\link{ato_to_taxstats}()}
+Other harmonisation:
+\code{\link[=ato_crosswalk]{ato_crosswalk()}},
+\code{\link[=ato_deflate]{ato_deflate()}},
+\code{\link[=ato_per_capita]{ato_per_capita()}},
+\code{\link[=ato_reconcile]{ato_reconcile()}},
+\code{\link[=ato_schema_map]{ato_schema_map()}},
+\code{\link[=ato_to_taxstats]{ato_to_taxstats()}}
 }
 \concept{harmonisation}

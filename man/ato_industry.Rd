@@ -41,7 +41,7 @@ options(op)
 }
 }
 \seealso{
-Other gst: 
-\code{\link{ato_gst}()}
+Other gst:
+\code{\link[=ato_gst]{ato_gst()}}
 }
 \concept{gst}

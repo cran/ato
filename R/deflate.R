@@ -103,7 +103,7 @@ ato_deflate <- function(x, year, base = "2022-23", cpi = NULL) {
 #' @export
 #' @examples
 #' # Income tax per person, 2022-23 FBO headline
-#' ato_per_capita(316.4e9, "2022-23")
+#' ato_per_capita(296.658e9, "2022-23")
 ato_per_capita <- function(x, year, erp = NULL) {
   stopifnot(is.numeric(x), is.character(year), length(x) == length(year))
   if (is.null(erp)) erp <- ato_crosswalk("erp")

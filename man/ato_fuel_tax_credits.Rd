@@ -58,15 +58,15 @@ Change 2022: Mitigation of Climate Change}. Chapter 13
 covers fossil-fuel subsidy reform.
 }
 \seealso{
-Other specialist: 
-\code{\link{ato_compliance}()},
-\code{\link{ato_division293}()},
-\code{\link{ato_international}()},
-\code{\link{ato_medicare_levy}()},
-\code{\link{ato_prrt}()},
-\code{\link{ato_rba}()},
-\code{\link{ato_state_tax}()},
-\code{\link{ato_tax_expenditures}()},
-\code{\link{ato_whm}()}
+Other specialist:
+\code{\link[=ato_compliance]{ato_compliance()}},
+\code{\link[=ato_division293]{ato_division293()}},
+\code{\link[=ato_international]{ato_international()}},
+\code{\link[=ato_medicare_levy]{ato_medicare_levy()}},
+\code{\link[=ato_prrt]{ato_prrt()}},
+\code{\link[=ato_rba]{ato_rba()}},
+\code{\link[=ato_state_tax]{ato_state_tax()}},
+\code{\link[=ato_tax_expenditures]{ato_tax_expenditures()}},
+\code{\link[=ato_whm]{ato_whm()}}
 }
 \concept{specialist}

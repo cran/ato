@@ -21,8 +21,8 @@ options(op)
 }
 }
 \seealso{
-Other configuration: 
-\code{\link{ato_clear_cache}()},
-\code{\link{ato_meta}()}
+Other configuration:
+\code{\link[=ato_clear_cache]{ato_clear_cache()}},
+\code{\link[=ato_meta]{ato_meta()}}
 }
 \concept{configuration}

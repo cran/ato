@@ -1,6 +1,6 @@
 Package: ato
 Title: Download and Tidy Australian Taxation Office Data
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     person("Charles", "Coverdale", , "charlesfcoverdale@gmail.com", role = c("aut", "cre"))
 Description: Fetch Australian Taxation Office (ATO) Taxation
@@ -28,7 +28,6 @@ Depends: R (>= 4.1.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-GB
-RoxygenNote: 7.3.3
 Imports: cli (>= 3.6.0), httr2 (>= 1.0.0), jsonlite, readxl (>= 1.4.0),
         tools, utils
 Suggests: digest, knitr, openssl, rmarkdown, testthat (>= 3.0.0)
@@ -37,9 +36,10 @@ VignetteBuilder: knitr
 URL: https://charlescoverdale.github.io/ato/,
         https://github.com/charlescoverdale/ato
 BugReports: https://github.com/charlescoverdale/ato/issues
+Config/roxygen2/version: 8.1.0
 NeedsCompilation: no
-Packaged: 2026-09-08 10:46:23 UTC; charlescoverdale
+Packaged: 2026-11-01 14:09:17 UTC; charlescoverdale
 Author: Charles Coverdale [aut, cre]
 Maintainer: Charles Coverdale <charlesfcoverdale@gmail.com>
 Repository: CRAN
-Date/Publication: 2026-09-08 12:30:37 UTC
+Date/Publication: 2026-11-01 16:20:34 UTC

@@ -34,11 +34,11 @@ taxpayer's reported date of birth at lodgement; sex is
 self-reported on the return.
 }
 \seealso{
-Other individuals: 
-\code{\link{ato_individuals}()},
-\code{\link{ato_individuals_age}()},
-\code{\link{ato_individuals_occupation}()},
-\code{\link{ato_individuals_postcode}()},
-\code{\link{ato_individuals_sex}()}
+Other individuals:
+\code{\link[=ato_individuals]{ato_individuals()}},
+\code{\link[=ato_individuals_age]{ato_individuals_age()}},
+\code{\link[=ato_individuals_occupation]{ato_individuals_occupation()}},
+\code{\link[=ato_individuals_postcode]{ato_individuals_postcode()}},
+\code{\link[=ato_individuals_sex]{ato_individuals_sex()}}
 }
 \concept{individuals}

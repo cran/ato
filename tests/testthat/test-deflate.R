@@ -29,8 +29,8 @@ test_that("ato_deflate warns on missing CPI year", {
 })
 
 test_that("ato_per_capita divides by ERP correctly", {
-  # AUD 316.4 billion / ~27 million = around AUD 12,000 per person
-  out <- ato_per_capita(316.4e9, "2022-23")
+  # AUD 296.7 billion / ~26.7 million = around AUD 11,100 per person
+  out <- ato_per_capita(296.658e9, "2022-23")
   expect_gt(out, 10000)
   expect_lt(out, 15000)
 })

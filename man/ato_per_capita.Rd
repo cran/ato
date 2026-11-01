@@ -32,19 +32,19 @@ statistics (see cat. 3101.0 methodology).
 }
 \examples{
 # Income tax per person, 2022-23 FBO headline
-ato_per_capita(316.4e9, "2022-23")
+ato_per_capita(296.658e9, "2022-23")
 }
 \references{
 Australian Bureau of Statistics (2024). \emph{National,
 State and Territory Population}. Catalogue 3101.0.
 }
 \seealso{
-Other harmonisation: 
-\code{\link{ato_crosswalk}()},
-\code{\link{ato_deflate}()},
-\code{\link{ato_harmonise}()},
-\code{\link{ato_reconcile}()},
-\code{\link{ato_schema_map}()},
-\code{\link{ato_to_taxstats}()}
+Other harmonisation:
+\code{\link[=ato_crosswalk]{ato_crosswalk()}},
+\code{\link[=ato_deflate]{ato_deflate()}},
+\code{\link[=ato_harmonise]{ato_harmonise()}},
+\code{\link[=ato_reconcile]{ato_reconcile()}},
+\code{\link[=ato_schema_map]{ato_schema_map()}},
+\code{\link[=ato_to_taxstats]{ato_to_taxstats()}}
 }
 \concept{harmonisation}

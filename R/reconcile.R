@@ -27,8 +27,9 @@
 #' reconciliation Treasury publishes in the FBO statement of
 #' revenues; larger gaps warrant investigation. The bundled
 #' reference totals in `inst/extdata/budget_reference_totals.csv`
-#' are taken from the relevant FBO release, with the precise table
-#' cited in the `source` column of each row.
+#' are read from the cash receipts table of each Final Budget Outcome
+#' (2019-20 to 2025-26) by `data-raw/budget_reference_totals.R`, with
+#' the edition and table cited in the `source` column of each row.
 #'
 #' @param value Numeric; the figure to check, in AUD (not AUD
 #'   billions). An `ato_tbl` can also be passed: pass `sum_column`
@@ -36,7 +37,8 @@
 #' @param year Financial year, e.g. `"2022-23"`.
 #' @param measure One of the measure codes in `ato_crosswalk("budget")`,
 #'   for example `"individuals_income_tax_net"`,
-#'   `"company_tax_net"`, `"gst_net"`, `"fuel_excise_net"`.
+#'   `"company_tax_net"`, `"gst_net"`, `"fuel_excise_and_customs"`,
+#'   `"taxation_receipts"`.
 #' @param sum_column Column name to sum when `value` is a data
 #'   frame. Default `NULL` (errors if multiple numeric columns
 #'   exist).
@@ -60,7 +62,7 @@
 #' @family harmonisation
 #' @export
 #' @examples
-#' ato_reconcile(value = 316.4e9,
+#' ato_reconcile(value = 290e9,
 #'               year = "2022-23",
 #'               measure = "individuals_income_tax_net")
 ato_reconcile <- function(value, year, measure,
@@ -103,8 +105,8 @@ ato_reconcile <- function(value, year, measure,
     cli::cli_warn(c(
       "Reconciliation diff {round(100*pct, 1)}% for {.val {measure}} \\
        ({.val {year}}).",
-      "i" = "ATO data: {.val {format(v, big.mark = ',', scientific = FALSE)}}.",
-      "i" = "Reference: {.val {format(ref_v, big.mark = ',', scientific = FALSE)}}.",
+      "i" = "ATO data: {format(v, big.mark = ',', scientific = FALSE)}.",
+      "i" = "Reference: {format(ref_v, big.mark = ',', scientific = FALSE)}.",
       "i" = "Expected 1-3% accrual-vs-cash gap; investigate larger."
     ))
   }

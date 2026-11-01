@@ -49,15 +49,15 @@ retirement: more than enough}. Grattan Institute. Uses
 Division 293 distributional data in reform analysis.
 }
 \seealso{
-Other specialist: 
-\code{\link{ato_compliance}()},
-\code{\link{ato_fuel_tax_credits}()},
-\code{\link{ato_international}()},
-\code{\link{ato_medicare_levy}()},
-\code{\link{ato_prrt}()},
-\code{\link{ato_rba}()},
-\code{\link{ato_state_tax}()},
-\code{\link{ato_tax_expenditures}()},
-\code{\link{ato_whm}()}
+Other specialist:
+\code{\link[=ato_compliance]{ato_compliance()}},
+\code{\link[=ato_fuel_tax_credits]{ato_fuel_tax_credits()}},
+\code{\link[=ato_international]{ato_international()}},
+\code{\link[=ato_medicare_levy]{ato_medicare_levy()}},
+\code{\link[=ato_prrt]{ato_prrt()}},
+\code{\link[=ato_rba]{ato_rba()}},
+\code{\link[=ato_state_tax]{ato_state_tax()}},
+\code{\link[=ato_tax_expenditures]{ato_tax_expenditures()}},
+\code{\link[=ato_whm]{ato_whm()}}
 }
 \concept{specialist}

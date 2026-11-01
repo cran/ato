@@ -18,7 +18,7 @@ bud[bud$financial_year == "2022-23" &
     bud$measure == "individuals_income_tax_net", ]
 
 ## -----------------------------------------------------------------------------
-res <- ato_reconcile(310.0e9, "2022-23", "individuals_income_tax_net")
+res <- ato_reconcile(290.0e9, "2022-23", "individuals_income_tax_net")
 res[, c("diff_aud", "pct_diff")]
 
 ## -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ erp <- ato_crosswalk("erp")
 erp[erp$financial_year == "2022-23", ]
 
 ## -----------------------------------------------------------------------------
-ato_per_capita(316.4e9, "2022-23")
+ato_per_capita(296.658e9, "2022-23")
 
 ## -----------------------------------------------------------------------------
 f <- tempfile()

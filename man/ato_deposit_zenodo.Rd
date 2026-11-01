@@ -68,11 +68,11 @@ try({
 }
 }
 \seealso{
-Other reproducibility: 
-\code{\link{ato_manifest}()},
-\code{\link{ato_manifest_clear}()},
-\code{\link{ato_manifest_write}()},
-\code{\link{ato_sha256}()},
-\code{\link{ato_snapshot}()}
+Other reproducibility:
+\code{\link[=ato_manifest]{ato_manifest()}},
+\code{\link[=ato_manifest_clear]{ato_manifest_clear()}},
+\code{\link[=ato_manifest_write]{ato_manifest_write()}},
+\code{\link[=ato_sha256]{ato_sha256()}},
+\code{\link[=ato_snapshot]{ato_snapshot()}}
 }
 \concept{reproducibility}

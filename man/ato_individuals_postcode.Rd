@@ -69,11 +69,11 @@ Australia." \emph{Journal of Economic Inequality}, 13(2),
 181-205. \doi{10.1007/s10888-014-9281-z}
 }
 \seealso{
-Other individuals: 
-\code{\link{ato_individuals}()},
-\code{\link{ato_individuals_age}()},
-\code{\link{ato_individuals_occupation}()},
-\code{\link{ato_individuals_sex}()},
-\code{\link{ato_individuals_state}()}
+Other individuals:
+\code{\link[=ato_individuals]{ato_individuals()}},
+\code{\link[=ato_individuals_age]{ato_individuals_age()}},
+\code{\link[=ato_individuals_occupation]{ato_individuals_occupation()}},
+\code{\link[=ato_individuals_sex]{ato_individuals_sex()}},
+\code{\link[=ato_individuals_state]{ato_individuals_state()}}
 }
 \concept{individuals}

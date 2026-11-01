@@ -57,12 +57,12 @@ Australian Taxation Office (2024). \emph{Taxation Statistics:
 Individual Sample File documentation}.
 }
 \seealso{
-Other harmonisation: 
-\code{\link{ato_crosswalk}()},
-\code{\link{ato_deflate}()},
-\code{\link{ato_harmonise}()},
-\code{\link{ato_per_capita}()},
-\code{\link{ato_reconcile}()},
-\code{\link{ato_schema_map}()}
+Other harmonisation:
+\code{\link[=ato_crosswalk]{ato_crosswalk()}},
+\code{\link[=ato_deflate]{ato_deflate()}},
+\code{\link[=ato_harmonise]{ato_harmonise()}},
+\code{\link[=ato_per_capita]{ato_per_capita()}},
+\code{\link[=ato_reconcile]{ato_reconcile()}},
+\code{\link[=ato_schema_map]{ato_schema_map()}}
 }
 \concept{harmonisation}

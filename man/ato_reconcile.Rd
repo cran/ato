@@ -15,7 +15,8 @@ to pick which numeric column to sum.}
 
 \item{measure}{One of the measure codes in \code{ato_crosswalk("budget")},
 for example \code{"individuals_income_tax_net"},
-\code{"company_tax_net"}, \code{"gst_net"}, \code{"fuel_excise_net"}.}
+\code{"company_tax_net"}, \code{"gst_net"}, \code{"fuel_excise_and_customs"},
+\code{"taxation_receipts"}.}
 
 \item{sum_column}{Column name to sum when \code{value} is a data
 frame. Default \code{NULL} (errors if multiple numeric columns
@@ -48,11 +49,12 @@ A 1-3 per cent gap is consistent with the accrual-to-cash
 reconciliation Treasury publishes in the FBO statement of
 revenues; larger gaps warrant investigation. The bundled
 reference totals in \code{inst/extdata/budget_reference_totals.csv}
-are taken from the relevant FBO release, with the precise table
-cited in the \code{source} column of each row.
+are read from the cash receipts table of each Final Budget Outcome
+(2019-20 to 2025-26) by \code{data-raw/budget_reference_totals.R}, with
+the edition and table cited in the \code{source} column of each row.
 }
 \examples{
-ato_reconcile(value = 316.4e9,
+ato_reconcile(value = 290e9,
               year = "2022-23",
               measure = "individuals_income_tax_net")
 }
@@ -69,12 +71,12 @@ Australian Taxation Office (annual). \emph{Australian tax gaps
 reconciliation.
 }
 \seealso{
-Other harmonisation: 
-\code{\link{ato_crosswalk}()},
-\code{\link{ato_deflate}()},
-\code{\link{ato_harmonise}()},
-\code{\link{ato_per_capita}()},
-\code{\link{ato_schema_map}()},
-\code{\link{ato_to_taxstats}()}
+Other harmonisation:
+\code{\link[=ato_crosswalk]{ato_crosswalk()}},
+\code{\link[=ato_deflate]{ato_deflate()}},
+\code{\link[=ato_harmonise]{ato_harmonise()}},
+\code{\link[=ato_per_capita]{ato_per_capita()}},
+\code{\link[=ato_schema_map]{ato_schema_map()}},
+\code{\link[=ato_to_taxstats]{ato_to_taxstats()}}
 }
 \concept{harmonisation}

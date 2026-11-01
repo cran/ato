@@ -366,8 +366,8 @@ Methods.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>cpi <span class="ot">&lt;-</span> <span class="fu">ato_crosswalk</span>(<span class="st">&quot;cpi&quot;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>cpi[cpi<span class="sc">$</span>financial_year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;2012-13&quot;</span>, <span class="st">&quot;2022-23&quot;</span>), ]</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt;    financial_year cpi_all_groups_australia base_2011_12</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; 19        2012-13                    101.7        1.025</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; 29        2022-23                    132.9        1.339</span></span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; 19        2012-13                    102.2        1.022</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; 29        2022-23                    131.4        1.314</span></span></code></pre></div>
 <p>Reading off the table: - <span class="math inline">\(CPI_{2012\text{-}13} = 101.7\)</span> - <span class="math inline">\(CPI_{2022\text{-}23} = 132.9\)</span></p>
 <p>Hand calculation:</p>
 <p><span class="math display">\[
@@ -375,7 +375,7 @@ Methods.</p>
 \]</span></p>
 <p>Package output:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">ato_deflate</span>(<span class="dv">100</span>, <span class="at">year =</span> <span class="st">&quot;2012-13&quot;</span>, <span class="at">base =</span> <span class="st">&quot;2022-23&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; [1] 130.6785</span></span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; [1] 128.5714</span></span></code></pre></div>
 <p>The package returns exactly 130.6785 (to four decimals), which
 matches the hand calculation to within rounding.</p>
 </div>
@@ -404,31 +404,32 @@ Final Budget Outcome reference total for the same year and measure.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>bud <span class="ot">&lt;-</span> <span class="fu">ato_crosswalk</span>(<span class="st">&quot;budget&quot;</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>bud[bud<span class="sc">$</span>financial_year <span class="sc">==</span> <span class="st">&quot;2022-23&quot;</span> <span class="sc">&amp;</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    bud<span class="sc">$</span>measure <span class="sc">==</span> <span class="st">&quot;individuals_income_tax_net&quot;</span>, ]</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;   financial_year                    measure value_aud_billion</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 3        2022-23 individuals_income_tax_net             316.4</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;                                   source</span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 3 Final Budget Outcome 2022-23 Table 4.2</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt;                                                                         definition</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 3 Gross income tax on individuals less refunds (cash basis, Commonwealth receipts)</span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt;   note</span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 3 &lt;NA&gt;</span></span></code></pre></div>
-<p>Reference: <span class="math inline">\(R = 316.4 \times 10^9\)</span>
-AUD.</p>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;    financial_year                    measure value_aud_billion</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 39        2022-23 individuals_income_tax_net           296.658</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;                                                                     source</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 39 Final Budget Outcome 2022-23, Table 1.3 (cash receipts), Outcome column</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt;                                                                        definition</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 39 Gross income tax withholding plus gross other individuals, less refunds (cash)</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt;                                                                  source_url</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 39 https://archive.budget.gov.au/2022-23-october/fbo/download/01_part_1.pdf</span></span></code></pre></div>
+<p>Reference: <span class="math inline">\(R = 296.658 \times
+10^9\)</span> AUD (Final Budget Outcome 2022-23, Table 1.3, total
+individuals and other withholding tax).</p>
 <p>Suppose we fetch the ATO 2022-23 Individuals snapshot and sum the
-<code>tax_payable</code> column. Say our sum is <span class="math inline">\(V = 310.0 \times 10^9\)</span> (hypothetical; real
+<code>tax_payable</code> column. Say our sum is <span class="math inline">\(V = 290.0 \times 10^9\)</span> (hypothetical; real
 sums typically fall 1 to 3 per cent below the cash-basis FBO).</p>
 <p>Hand:</p>
 <p><span class="math display">\[
-\Delta = 310.0 - 316.4 = -6.4 \text{ (AUD billion)}
+\Delta = 290.0 - 296.658 = -6.658 \text{ (AUD billion)}
 \]</span></p>
 <p><span class="math display">\[
-\pi = \frac{-6.4}{316.4} = -0.02023 = -2.02\%
+\pi = \frac{-6.658}{296.658} = -0.02244 = -2.24\%
 \]</span></p>
 <p>Package output:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ato_reconcile</span>(<span class="fl">310.0e9</span>, <span class="st">&quot;2022-23&quot;</span>, <span class="st">&quot;individuals_income_tax_net&quot;</span>)</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ato_reconcile</span>(<span class="fl">290.0e9</span>, <span class="st">&quot;2022-23&quot;</span>, <span class="st">&quot;individuals_income_tax_net&quot;</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>res[, <span class="fu">c</span>(<span class="st">&quot;diff_aud&quot;</span>, <span class="st">&quot;pct_diff&quot;</span>)]</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt;   diff_aud    pct_diff</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; 1 -6.4e+09 -0.02022756</span></span></code></pre></div>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt;     diff_aud    pct_diff</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; 1 -6.658e+09 -0.02244335</span></span></code></pre></div>
 <p>Agrees with hand calculation.</p>
 </div>
 <div id="warning-threshold" class="section level3">
@@ -442,13 +443,13 @@ Test:</p>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="cn">NULL</span></span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  }</span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>)</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; Captured warning: Reconciliation diff 26.4% for &quot;individuals_income_tax_net&quot; (&quot;2022-23&quot;).</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; ℹ ATO data: &quot;400,000,000,000&quot;.</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; ℹ Reference: &quot;316,400,000,000&quot;.</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; Captured warning: Reconciliation diff 34.8% for &quot;individuals_income_tax_net&quot; (&quot;2022-23&quot;).</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; ℹ ATO data: 400,000,000,000.</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; ℹ Reference: 296,658,000,000.</span></span>
 <span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; ℹ Expected 1-3% accrual-vs-cash gap; investigate larger.</span></span></code></pre></div>
 <p>At <span class="math inline">\(V = 400 \text{ AUD billion}\)</span>,
-the diff is +83.6 billion and <span class="math inline">\(\pi =
-26.4\%\)</span> which exceeds the 5% threshold, so the warning
+the diff is +103.3 billion and <span class="math inline">\(\pi =
+34.8\%\)</span> which exceeds the 5% threshold, so the warning
 fires.</p>
 </div>
 </div>
@@ -469,18 +470,18 @@ Estimated Resident Population at 30 June of the financial year end (cat.
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>erp <span class="ot">&lt;-</span> <span class="fu">ato_crosswalk</span>(<span class="st">&quot;erp&quot;</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>erp[erp<span class="sc">$</span>financial_year <span class="sc">==</span> <span class="st">&quot;2022-23&quot;</span>, ]</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt;    financial_year erp_june_australia_thousands note</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; 29        2022-23                        26638 &lt;NA&gt;</span></span></code></pre></div>
-<p>ERP 2022-23 = 26,638 thousand = 26,638,000 persons.</p>
-<p>Commonwealth individual income tax for 2022-23 = AUD 316.4 billion
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; 29        2022-23                        26660 &lt;NA&gt;</span></span></code></pre></div>
+<p>ERP 2022-23 = 26,660 thousand = 26,660,000 persons.</p>
+<p>Commonwealth individual income tax for 2022-23 = AUD 296.658 billion
 (from <code>ato_reconcile()</code> reference).</p>
 <p>Hand:</p>
 <p><span class="math display">\[
-\frac{316.4 \times 10^9}{26.638 \times 10^6} \;=\; 11{,}878 \text{ AUD
+\frac{296.658 \times 10^9}{26.660 \times 10^6} \;=\; 11{,}127 \text{ AUD
 per person}
 \]</span></p>
 <p>Package output:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">ato_per_capita</span>(<span class="fl">316.4e9</span>, <span class="st">&quot;2022-23&quot;</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; [1] 11877.77</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">ato_per_capita</span>(<span class="fl">296.658e9</span>, <span class="st">&quot;2022-23&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; [1] 11127.46</span></span></code></pre></div>
 <p>Agrees.</p>
 </div>
 </div>

@@ -26,11 +26,11 @@ writeLines("hello", f)
 ato_sha256(f)
 }
 \seealso{
-Other reproducibility: 
-\code{\link{ato_deposit_zenodo}()},
-\code{\link{ato_manifest}()},
-\code{\link{ato_manifest_clear}()},
-\code{\link{ato_manifest_write}()},
-\code{\link{ato_snapshot}()}
+Other reproducibility:
+\code{\link[=ato_deposit_zenodo]{ato_deposit_zenodo()}},
+\code{\link[=ato_manifest]{ato_manifest()}},
+\code{\link[=ato_manifest_clear]{ato_manifest_clear()}},
+\code{\link[=ato_manifest_write]{ato_manifest_write()}},
+\code{\link[=ato_snapshot]{ato_snapshot()}}
 }
 \concept{reproducibility}

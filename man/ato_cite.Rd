@@ -51,19 +51,19 @@ ato_cite(x, style = "bibtex")
 ato_cite(x, style = "apa", doi = "10.5281/zenodo.XXXXXXXX")
 }
 \seealso{
-Other discovery: 
-\code{\link{ato_catalog}()},
-\code{\link{ato_charities}()},
-\code{\link{ato_download}()},
-\code{\link{ato_excise}()},
-\code{\link{ato_fbt}()},
-\code{\link{ato_help}()},
-\code{\link{ato_irpd}()},
-\code{\link{ato_payg}()},
-\code{\link{ato_rdti}()},
-\code{\link{ato_sme_benchmarks}()},
-\code{\link{ato_tax_gaps}()},
-\code{\link{ato_top_taxpayers}()},
-\code{\link{ato_vttc}()}
+Other discovery:
+\code{\link[=ato_catalog]{ato_catalog()}},
+\code{\link[=ato_charities]{ato_charities()}},
+\code{\link[=ato_download]{ato_download()}},
+\code{\link[=ato_excise]{ato_excise()}},
+\code{\link[=ato_fbt]{ato_fbt()}},
+\code{\link[=ato_help]{ato_help()}},
+\code{\link[=ato_irpd]{ato_irpd()}},
+\code{\link[=ato_payg]{ato_payg()}},
+\code{\link[=ato_rdti]{ato_rdti()}},
+\code{\link[=ato_sme_benchmarks]{ato_sme_benchmarks()}},
+\code{\link[=ato_tax_gaps]{ato_tax_gaps()}},
+\code{\link[=ato_top_taxpayers]{ato_top_taxpayers()}},
+\code{\link[=ato_vttc]{ato_vttc()}}
 }
 \concept{discovery}

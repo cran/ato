@@ -47,7 +47,7 @@ Equalisation}. Background reference on the GST distribution
 formula across states.
 }
 \seealso{
-Other gst: 
-\code{\link{ato_industry}()}
+Other gst:
+\code{\link[=ato_industry]{ato_industry()}}
 }
 \concept{gst}

@@ -36,7 +36,7 @@ ato_clean_names <- function(x) {
 #' @noRd
 ATO_SUPPRESSION_TOKENS <- c(
   "",
-  "NA", "N/A", "N.A.", "n/a", "n.a.",
+  "NA", "na", "N/A", "N.A.", "n/a", "n.a.",
   "np", "n.p.", "N.P.", "Np",
   "-", "--", ".", "..", "...",
   "*", "**",
@@ -55,7 +55,38 @@ ato_fetch_csv <- function(url, ...) {
                         check.names = FALSE,
                         na.strings = ATO_SUPPRESSION_TOKENS,
                         ...)
-  names(df) <- ato_clean_names(names(df))
+  ato_tidy_wide(df)
+}
+
+#' Repair the column names and year columns of a wide ATO table
+#'
+#' Three defects the raw sheets carry into R:
+#' * year headers keep their footnote markers, so "2000-01" with note 2
+#'   cleans to `2000_012`;
+#' * label and unit columns have no header, giving empty names, which
+#'   tibbles and dplyr reject;
+#' * year columns that hold a section-heading row are read as text.
+#'
+#' Year columns are converted only when every non-missing entry is a
+#' number; identifier columns such as postcodes are not touched, so their
+#' leading zeros survive.
+#' @noRd
+ato_tidy_wide <- function(df) {
+  nm <- ato_clean_names(names(df))
+  nm <- sub("^([0-9]{4}_[0-9]{2})[0-9]{1,2}$", "\\1", nm)
+  blank <- !nzchar(nm)
+  nm[blank] <- paste0("x", which(blank))
+  names(df) <- make.unique(nm, sep = "_")
+
+  for (j in grep("^[0-9]{4}_[0-9]{2}$", names(df))) {
+    v <- df[[j]]
+    if (!is.character(v)) next
+    t <- trimws(gsub(",", "", v, fixed = TRUE))
+    t[!nzchar(t)] <- NA
+    if (all(is.na(t) | grepl("^-?[0-9]*\\.?[0-9]+$", t))) {
+      df[[j]] <- as.numeric(t)
+    }
+  }
   df
 }
 
@@ -95,8 +126,7 @@ ato_fetch_xlsx <- function(url, sheet = 1, skip = NULL) {
                        .name_repair = "minimal"),
     stringsAsFactors = FALSE
   )
-  names(df) <- ato_clean_names(names(df))
-  df
+  ato_tidy_wide(df)
 }
 
 #' Sheet names that hold front matter rather than data
